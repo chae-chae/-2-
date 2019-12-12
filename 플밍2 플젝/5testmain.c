@@ -40,8 +40,8 @@ int main(int argc, const char * argv[]) {
     
     FILE * dicDotList = fopen("dic.list", "at"); // dic.list파일(n.dic가 들어갈 파일 생성)
     
-//    List list; // 링크드리스트 관리구조체 (아직 데이터노드가 안붙었음)
-//    BOOL bres; // 링크드리스트 관리구조체 제대로 만들어졌는지 불값저장
+    //    List list; // 링크드리스트 관리구조체 (아직 데이터노드가 안붙었음)
+    //    BOOL bres; // 링크드리스트 관리구조체 제대로 만들어졌는지 불값저장
     
     int menusel;
     menusel = menuScreen();
@@ -137,6 +137,86 @@ void addNewFile(FILE* ddlp){
         
         unsigned long len = strlen(input);
         input[len-1] = '\0'; // 개행빼주는 작업
+        //        printf("input : %s\n", input); // 확인
+        char *tokptr = strtok(input, " "); // 문자열 공백마다 분리
+        while (tokptr != NULL) { // 옮겨주면서 분리한거 저장
+            sArr[pmove] = tokptr;
+            pmove++;
+            tokptr = strtok(NULL, " ");
+        }
+        
+        if (!strcmp(sArr[0], ".add")) {// .add 입력종료조건
+            printf(".add로 종료됨\n");
+            break;
+        }
+        
+        switch (pmove) {
+            case 2: // 한글 뜻 한개적었을때
+                strcpy(temp.eng, sArr[0]);
+                //                printf("eng : %s\n", sArr[0]);
+                strcpy(temp.kr1, sArr[1]);
+                //                printf("kor1 : %s\n", sArr[1]);
+                addLast(lp, temp.eng, temp.kr1, temp.kr2, temp.kr3);
+                break;
+            case 3: // 뜻 두개
+                strcpy(temp.eng, sArr[0]);
+                //                printf("eng : %s\n", sArr[0]);
+                strcpy(temp.kr1, sArr[1]);
+                //                printf("kor1 : %s\n", sArr[1]);
+                strcpy(temp.kr2, sArr[2]);
+                //                printf("kor2 : %s\n", sArr[2]);
+                addLast(lp, temp.eng, temp.kr1, temp.kr2, temp.kr3);
+                break;
+            case 4: // 뜻 세개
+                strcpy(temp.eng, sArr[0]);
+                //                printf("eng : %s\n", sArr[0]);
+                strcpy(temp.kr1, sArr[1]);
+                //                printf("kor1 : %s\n", sArr[1]);
+                strcpy(temp.kr2, sArr[2]);
+                //                printf("kor2 : %s\n", sArr[2]);
+                strcpy(temp.kr3, sArr[3]);
+                //                printf("kor3 : %s\n", sArr[3]);
+                addLast(lp, temp.eng, temp.kr1, temp.kr2, temp.kr3);
+                break;
+            default:
+                break;
+        }
+        max++;
+    }
+    //    displayList(lp); // 확인용
+    saveList(lp, numDotDic); // n.dic파일 저장
+    if (wordBookCnt%6 == 0){
+        fprintf(ddlp, "\n");
+    }
+    fprintf(ddlp, "%s ", filename); //dic.list 에 n.dic 이라고 이어서 씀
+    fflush(ddlp);
+    fclose(numDotDic); // n.dic 닫아주기
+    return;
+}
+void addNewWord(FILE* ddlp){
+    int input;
+    printf("파일명(일차) : ");
+    scanf("%d", &input);
+    char filename[10];
+    sprintf(filename, "%d", input);
+    strcat(filename, ".dic");
+    FILE *numDotDic = fopen(filename, "at");
+    printf("%s 열기 성공\n", filename);
+    MyFlush();
+    List list;
+    List* lp = &list;
+    createList(lp);
+    int max = 0;
+    
+    while (max<20) {
+        char input[300]; //임시로 입력받을 긴 문자열하나
+        char *sArr[4] = {NULL, }; // 자른 문자열 포인터 저장할 배열 4칸(최대치를 위해)
+        int pmove = 0; // 자른 문자열 포인터 옮겨줄 변수
+        Node temp = {NULL, "", "", "", "", NULL}; // 여기에 임시적으로 저장하고 후에 lp진퉁에 add해줘야함
+        fgets(input, sizeof(input), stdin); // 공백포함해서 쭉받고 마지막개행까지받아서
+        
+        unsigned long len = strlen(input);
+        input[len-1] = '\0'; // 개행빼주는 작업
 //        printf("input : %s\n", input); // 확인
         char *tokptr = strtok(input, " "); // 문자열 공백마다 분리
         while (tokptr != NULL) { // 옮겨주면서 분리한거 저장
@@ -183,89 +263,52 @@ void addNewFile(FILE* ddlp){
         }
         max++;
     }
-    displayList(lp); // 확인용
-    saveList(lp, numDotDic); // n.dic파일 저장
-    fprintf(ddlp, "%s ", filename); //dic.list 에 n.dic 이라고 이어서 씀
-    fclose(numDotDic); // n.dic 닫아주기
-    return;
-}
-void addNewWord(FILE* ddlp){
-    char daySel[20];
-    printf("단어를 추가할 단어장을 입력해주세요 (x.dic) : ");
-    scanf("%s", daySel);
-    FILE *numDotDic = fopen(daySel, "at");
-    printf("%s 열기 성공\n", daySel);
-    MyFlush();
-    List list;
-    List* lp = &list;
-    createList(lp);
-    int max = 0;
-    
-    while (max<20) {
-        char input[300]; //임시로 입력받을 긴 문자열하나
-        char *sArr[4] = {NULL, }; // 자른 문자열 포인터 저장할 배열 4칸(최대치를 위해)
-        int pmove = 0; // 자른 문자열 포인터 옮겨줄 변수
-        Node temp = {NULL, "", "", "", "", NULL}; // 여기에 임시적으로 저장하고 후에 lp진퉁에 add해줘야함
-        fgets(input, sizeof(input), stdin); // 공백포함해서 쭉받고 마지막개행까지받아서
-
-        unsigned long len = strlen(input);
-        input[len-1] = '\0'; // 개행빼주는 작업
-        printf("input : %s\n", input); // 확인
-        char *tokptr = strtok(input, " "); // 문자열 공백마다 분리
-        while (tokptr != NULL) { // 옮겨주면서 분리한거 저장
-            sArr[pmove] = tokptr;
-            pmove++;
-            tokptr = strtok(NULL, " ");
-        }
-
-        if (!strcmp(sArr[0], ".add")) {// .add 입력종료조건
-            printf(".add로 종료됨\n");
-            break;
-        }
-
-        switch (pmove) {
-            case 2: // 한글 뜻 한개적었을때
-                strcpy(temp.eng, sArr[0]);
-                //                printf("eng : %s\n", sArr[0]);
-                strcpy(temp.kr1, sArr[1]);
-                //                printf("kor1 : %s\n", sArr[1]);
-                addLast(lp, temp.eng, temp.kr1, temp.kr2, temp.kr3);
-                break;
-            case 3: // 뜻 두개
-                strcpy(temp.eng, sArr[0]);
-                //                printf("eng : %s\n", sArr[0]);
-                strcpy(temp.kr1, sArr[1]);
-                //                printf("kor1 : %s\n", sArr[1]);
-                strcpy(temp.kr2, sArr[2]);
-                //                printf("kor2 : %s\n", sArr[2]);
-                addLast(lp, temp.eng, temp.kr1, temp.kr2, temp.kr3);
-                break;
-            case 4: // 뜻 세개
-                strcpy(temp.eng, sArr[0]);
-                //                printf("eng : %s\n", sArr[0]);
-                strcpy(temp.kr1, sArr[1]);
-                //                printf("kor1 : %s\n", sArr[1]);
-                strcpy(temp.kr2, sArr[2]);
-                //                printf("kor2 : %s\n", sArr[2]);
-                strcpy(temp.kr3, sArr[3]);
-                //                printf("kor3 : %s\n", sArr[3]);
-                addLast(lp, temp.eng, temp.kr1, temp.kr2, temp.kr3);
-                break;
-            default:
-                break;
-        }
-        max++;
-    }
     //    displayList(lp); // 확인용
     saveList(lp, numDotDic); // n.dic파일 저장
-//    fprintf(ddlp, "%s ", filename); //dic.list 에 n.dic 이라고 이어서 씀
+    //    fprintf(ddlp, "%s ", filename); //dic.list 에 n.dic 이라고 이어서 씀
     fclose(numDotDic); // n.dic 닫아주기
 }
 void viewWordBook(void){
-    
+    int input;
+    long long size; // 혹시 모자랄수도 있으니까
+    char *wordBook;
+    unsigned long whatByte;
+    printf("파일명(일차) : ");
+    scanf("%d", &input);
+    char filename[10];
+    sprintf(filename, "%d", input);
+    strcat(filename, ".dic");
+    FILE *numDotDic= fopen(filename, "r"); //새 파일을 읽기용으로 연다
+    if (numDotDic == NULL) {
+        printf("%s 읽기 실패\n", filename);
+        return;
+    }
+    fseek(numDotDic, 0, SEEK_END);
+    size = ftell(numDotDic);
+    wordBook = malloc(size+1); // 널문자
+    memset(wordBook, 0, size + 1);  // 파일 크기 + 1바이트만큼 메모리를 0으로 초기화
+    fseek(numDotDic, 0, SEEK_SET); // 다시 처음으로 돌리기
+    whatByte = fread(wordBook, size, 1, numDotDic);
+    printf("\n---------단어장--------\n%s\n", wordBook);
 }
 void viewFileList(void){
+    long long size; // 혹시 모자랄수도 있으니까
+    char *wordBookList;
+    unsigned long whatByte;
     
+    FILE *dicList= fopen("dic.list", "r"); //새 파일을 읽기용으로 연다
+    if (dicList == NULL) {
+        printf("읽기 실패\n");
+        return;
+    }
+    fseek(dicList, 0, SEEK_END);
+    size = ftell(dicList);
+    wordBookList = malloc(size+1); // 널문자
+    memset(wordBookList, 0, size + 1);  // 파일 크기 + 1바이트만큼 메모리를 0으로 초기화
+    fseek(dicList, 0, SEEK_SET); // 다시 처음으로 돌리기
+    whatByte = fread(wordBookList, size, 1, dicList);
+    printf("\n---------단어 파일 목록--------\n%s\n", wordBookList);
+
 }
 
 
