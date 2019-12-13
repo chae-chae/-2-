@@ -131,6 +131,7 @@ int separateString(char input[], char **sArr, char *std){
     while (tokptr != NULL) { // 옮겨주면서 분리한거 저장
         sArr[pmove] = tokptr;
         pmove++;
+        printf("pmove : %d\n", pmove);
         tokptr = strtok(NULL, std);
     }
     return pmove;
@@ -169,5 +170,34 @@ void wordMemCpy(int pmove, char *sArr[], List *lp){
             break;
         default:
             break;
+    }
+}
+
+int getTotalLine(char *name){
+    FILE *fp;
+    int line=0;
+    char c;
+    fp=fopen(name,"r");
+    while((c=fgetc(fp))!=EOF)
+        if(c=='\n') line++;
+    fclose(fp);
+    printf("line : %d\n", line);
+    return line;
+}
+void stringCpy(char temp[], char string[][4][30], int index){
+    for (int i = 0; i<4; i++) {
+        strcpy(temp, string[index][i]);
+        strcpy(string[index][i], string[index+1][i]);
+        strcpy(string[index+1][i], temp);
+    }
+}
+
+void shuffle(char string[][4][30], int num){
+    srand(time(NULL));
+    char temp[30] = {""};
+    int rn;
+    for (int i = 0; i< num-1; i++) {
+        rn = rand() % (num-i) + i;
+        stringCpy(temp, string, rn);
     }
 }

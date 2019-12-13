@@ -14,7 +14,7 @@ int menuScreen(void);
 int input(void);
 void MyFlush(void);
 void quiz(void);
-//void flashCard(void);
+void flashCard(void);
 //void hangMan(void);
 void wordBook(FILE *);
 void addNewFile(FILE *);
@@ -48,8 +48,8 @@ int main(int argc, const char * argv[]) {
     while (menusel != 5) {
         switch (menusel) {
                             case 1: quiz(); break;
-                //            case 2: flashCard(); break;
-                //            case 3: hangMan(); break;
+                            case 2: flashCard(); break;
+//                            case 3: hangMan(); break;
             case 4: wordBook(dicDotList); break;
             default: break;
         }
@@ -309,5 +309,6 @@ void viewFileList(void){
     printf("\n---------단어 파일 목록--------\n%s\n", wordBookList);
 
 }
+
 
 

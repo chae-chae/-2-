@@ -9,8 +9,9 @@
 #ifndef word_h
 #define word_h
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
 enum _bool{FALSE, TRUE};
 typedef enum _bool BOOL;
@@ -37,5 +38,9 @@ void sortList(List *lp);                    /* 노드 정렬 - 오름차순 */
 void destroyList(List *lp);                    /* 리스트 내의 모든 노드를 삭제 */
 int separateString(char input[], char **sArr, char *std);
 void wordMemCpy(int pmove, char *sArr[], List *lp);
+void shuffle(char string[][4][30], int num);
+void stringCpy(char temp[], char string[][4][30], int index);
+int getTotalLine(char *name);
 
 #endif /* word_h */
+
