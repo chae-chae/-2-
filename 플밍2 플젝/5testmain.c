@@ -13,7 +13,7 @@
 int menuScreen(void);
 int input(void);
 void MyFlush(void);
-//void quiz(void);
+void quiz(void);
 //void flashCard(void);
 //void hangMan(void);
 void wordBook(FILE *);
@@ -47,7 +47,7 @@ int main(int argc, const char * argv[]) {
     menusel = menuScreen();
     while (menusel != 5) {
         switch (menusel) {
-                //            case 1: quiz(); break;
+                            case 1: quiz(); break;
                 //            case 2: flashCard(); break;
                 //            case 3: hangMan(); break;
             case 4: wordBook(dicDotList); break;
@@ -214,7 +214,6 @@ void addNewWord(FILE* ddlp){
         int pmove = 0; // 자른 문자열 포인터 옮겨줄 변수
         Node temp = {NULL, "", "", "", "", NULL}; // 여기에 임시적으로 저장하고 후에 lp진퉁에 add해줘야함
         fgets(input, sizeof(input), stdin); // 공백포함해서 쭉받고 마지막개행까지받아서
-        
         unsigned long len = strlen(input);
         input[len-1] = '\0'; // 개행빼주는 작업
 //        printf("input : %s\n", input); // 확인

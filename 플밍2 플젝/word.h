@@ -33,8 +33,9 @@ void displayList(List *lp);                    /* 리스트 내의 모든 데이
 void saveList(List *lp, FILE *fp); // file에 저장
 //BOOL removeNode(List *lp, int data);        /* data 노드 삭제 */
 //Node * searchNode(List *lp, int data);        /* data와 일치하는 node 검색 */
-//void sortList(List *lp);                    /* 노드 정렬 - 오름차순 */
+void sortList(List *lp);                    /* 노드 정렬 - 오름차순 */
 void destroyList(List *lp);                    /* 리스트 내의 모든 노드를 삭제 */
-
+int separateString(char input[], char **sArr, char *std);
+void wordMemCpy(int pmove, char *sArr[], List *lp);
 
 #endif /* word_h */
