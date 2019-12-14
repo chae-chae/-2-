@@ -38,6 +38,8 @@ static int wordBookCnt = 0;
 
 int main(int argc, const char * argv[]) {
     
+    srand(time(NULL));
+    
     FILE * dicDotList = fopen("dic.list", "at"); // dic.list파일(n.dic가 들어갈 파일 생성)
     
     //    List list; // 링크드리스트 관리구조체 (아직 데이터노드가 안붙었음)

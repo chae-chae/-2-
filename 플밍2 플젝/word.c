@@ -192,12 +192,50 @@ void stringCpy(char temp[], char string[][4][30], int index){
     }
 }
 
-void shuffle(char string[][4][30], int num){
-    srand(time(NULL));
-    char temp[30] = {""};
+void shuffle(char string[][4][30], int line){
+//    srand(time(NULL));
+    char temp[30];
     int rn;
-    for (int i = 0; i< num-1; i++) {
-        rn = rand() % (num-i) + i;
-        stringCpy(temp, string, rn);
+    for (int i = 0; i< line-1; i++) {
+        rn = rand() % (line-i) + i;
+        
+        
+        for (int j = 0; j<4; j++) {
+            memmove(temp, string[i][j], sizeof(temp));
+            memmove(string[i][j], string[rn][j], sizeof(temp));
+            memmove(string[rn][j], temp, sizeof(temp));
+//            strcpy(temp, string[i][j]);
+//            strcpy(string[i][j], string[rn][j]);
+//            strcpy(string[rn][j], temp);
+        }
+//        stringCpy(temp, string, rn);
     }
 }
+//void randomize(char string[][4][30], int line){
+////    srand(time(NULL));
+//    int nA, nB;
+//    char nTemp[30] = {""};
+//    for (int i = 0; i<line*2; i++) {
+//        nA = rand() % line;
+//        nB = rand() % line;
+//        
+////        if (nA == nB) {
+////
+////        }
+//        
+//        strcpy(nTemp, string[nA][0]);
+//        strcpy(string[nA][0], string[nB][0]);
+//        strcpy(string[nB][0], nTemp);
+//                
+//    }
+//    for (int i = 0; i<line; i++) {
+//        printf("random eng %d : %s\n", i, string[i][0]);
+//    }
+//}
+
+//void swap(char string[][4][30], int indexA, int indexB){
+//    char temp[30];
+//
+//}
+//
+

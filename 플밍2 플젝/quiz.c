@@ -110,6 +110,7 @@ void quiz(void){
     score = (double)corNum/line * 100;
     printf("당신의 점수는 %.2lf 점입니다\n", score);
     getchar();
+    getchar();
     
     return;
 }

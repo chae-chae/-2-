@@ -99,14 +99,16 @@ void flashCard(void){
     printf(">> 영어 단어 암기 프로그램 : 플래쉬카드 <<\n");
     printf("\n");
     for (int i = 0; i<line; i++) {
-        printf("%s", quizArr[i][0]);
+        printf(">> 영어 단어 암기 프로그램 : 플래쉬카드 <<\n\n");
+        printf("\t%s\n", quizArr[i][0]);
         sleep(sec);
-//        system("clear");
-        printf("%s %s %s", quizArr[i][1], quizArr[i][2], quizArr[i][3]);
+        system("clear");
+        printf(">> 영어 단어 암기 프로그램 : 플래쉬카드 <<\n\n");
+        printf("\t%s %s %s\n", quizArr[i][1], quizArr[i][2], quizArr[i][3]);
         sleep(sec);
-//        system("clear");
+        system("clear");
         
     }
-
+    system("clear");
 
 }
