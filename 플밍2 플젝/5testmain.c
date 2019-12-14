@@ -12,10 +12,9 @@
 
 int menuScreen(void);
 int input(void);
-void MyFlush(void);
 void quiz(void);
 void flashCard(void);
-//void hangMan(void);
+void hangMan(void);
 void wordBook(FILE *);
 void addNewFile(FILE *);
 void addNewWord(FILE* ddlp);
@@ -34,13 +33,29 @@ typedef struct _word{
 //} List;
 //
 
-static int wordBookCnt = 0;
+int wordBookCnt;
 
 int main(int argc, const char * argv[]) {
-    
+    system("clear");
     srand(time(NULL));
     
     FILE * dicDotList = fopen("dic.list", "at"); // dic.list파일(n.dic가 들어갈 파일 생성)
+    
+    char filename[10];
+    int dicCheck = 1;
+    while (1) {
+        sprintf(filename, "%d", dicCheck);
+        strcat(filename, ".dic"); // filename[] = "dicCheck.dic"
+        FILE *dcptr = fopen(filename, "r");
+        if (dcptr == NULL) { // 파일없음
+            wordBookCnt = dicCheck - 1;
+            break;
+        }
+        dicCheck++;
+    }
+        
+    
+    
     
     //    List list; // 링크드리스트 관리구조체 (아직 데이터노드가 안붙었음)
     //    BOOL bres; // 링크드리스트 관리구조체 제대로 만들어졌는지 불값저장
@@ -49,23 +64,18 @@ int main(int argc, const char * argv[]) {
     menusel = menuScreen();
     while (menusel != 5) {
         switch (menusel) {
-                            case 1: quiz(); break;
-                            case 2: flashCard(); break;
-//                            case 3: hangMan(); break;
+            case 1: quiz(); break;
+            case 2: flashCard(); break;
+            case 3: hangMan(); break;
             case 4: wordBook(dicDotList); break;
             default: break;
         }
         menusel = menuScreen();
     }
-    //    clear(); // 리눅스에서 해줘야함!! 까먹지말기
+    system("clear");
     return 0;
 }
 
-void MyFlush(void){
-    while (getchar() != '\n') {
-        ;
-    }
-}
 
 int menuScreen(void){
     int sel;
@@ -92,8 +102,7 @@ int input(void){
 }
 void wordBook(FILE *ddlp){
     int sel;
-    //    clear(); // 리눅스해주기
-    
+    system("clear");
     printf(">> 영어 단어 암기 프로그램 : 단어장 관리 <<\n");
     printf("1. 새 파일 추가하기\t2. 새 단어 추가하기\n");
     printf("3. 단어장 보기\t4. 단어 파일 목록보기\n");
@@ -114,9 +123,11 @@ void wordBook(FILE *ddlp){
         printf("5. 단어장 관리 종료\n\n");
         sel = input();
     }
+    system("clear");
     return;
 }
 void addNewFile(FILE* ddlp){
+    system("clear");
     printf(">> 영어 단어 암기 프로그램 : 단어장 관리 : 새 파일 추가 <<\n");
     wordBookCnt++; // 단어장 하나 추가
     char filename[10];
@@ -148,7 +159,7 @@ void addNewFile(FILE* ddlp){
         }
         
         if (!strcmp(sArr[0], ".add")) {// .add 입력종료조건
-            printf(".add로 종료됨\n");
+            //            printf(".add로 종료됨\n");
             break;
         }
         
@@ -187,15 +198,18 @@ void addNewFile(FILE* ddlp){
     }
     //    displayList(lp); // 확인용
     saveList(lp, numDotDic); // n.dic파일 저장
-    if (wordBookCnt%6 == 0){
+    if (wordBookCnt%6 == 0){ // 여기되는가
         fprintf(ddlp, "\n");
     }
     fprintf(ddlp, "%s ", filename); //dic.list 에 n.dic 이라고 이어서 씀
     fflush(ddlp);
     fclose(numDotDic); // n.dic 닫아주기
+    system("clear");
     return;
 }
 void addNewWord(FILE* ddlp){
+    system("clear");
+    printf(">> 영어 단어 암기 프로그램 : 단어장 관리 : 새 단어 추가 <<\n");
     int input;
     printf("파일명(일차) : ");
     scanf("%d", &input);
@@ -218,7 +232,7 @@ void addNewWord(FILE* ddlp){
         fgets(input, sizeof(input), stdin); // 공백포함해서 쭉받고 마지막개행까지받아서
         unsigned long len = strlen(input);
         input[len-1] = '\0'; // 개행빼주는 작업
-//        printf("input : %s\n", input); // 확인
+        //        printf("input : %s\n", input); // 확인
         char *tokptr = strtok(input, " "); // 문자열 공백마다 분리
         while (tokptr != NULL) { // 옮겨주면서 분리한거 저장
             sArr[pmove] = tokptr;
@@ -227,7 +241,7 @@ void addNewWord(FILE* ddlp){
         }
         
         if (!strcmp(sArr[0], ".add")) {// .add 입력종료조건
-            printf(".add로 종료됨\n");
+            //            printf(".add로 종료됨\n");
             break;
         }
         
@@ -268,6 +282,7 @@ void addNewWord(FILE* ddlp){
     saveList(lp, numDotDic); // n.dic파일 저장
     //    fprintf(ddlp, "%s ", filename); //dic.list 에 n.dic 이라고 이어서 씀
     fclose(numDotDic); // n.dic 닫아주기
+    system("clear");
 }
 void viewWordBook(void){
     int input;
@@ -309,7 +324,7 @@ void viewFileList(void){
     fseek(dicList, 0, SEEK_SET); // 다시 처음으로 돌리기
     whatByte = fread(wordBookList, size, 1, dicList);
     printf("\n---------단어 파일 목록--------\n%s\n", wordBookList);
-
+    
 }
 
 

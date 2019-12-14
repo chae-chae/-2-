@@ -44,15 +44,15 @@ void quiz(void){
     
     char *sArr[line]; // 개행기준분리
     separateString(wordBook, sArr, "\n"); // 된당!
-    for (int i = 0; i<line; i++) { // 확인용
-        printf("%s\n", sArr[i]);
-    }
+//    for (int i = 0; i<line; i++) { // 확인용
+//        printf("%s\n", sArr[i]);
+//    }
     char *wordSeperated[4]; // 빈칸기준 분리
     char quizArr[line][4][30];
     memset(quizArr, 0, sizeof(quizArr)+1);
     for (int i = 0; i<line; i++) { // line만큼 돌아야함
         int chrCnt = separateString(sArr[i], wordSeperated, " ");
-        printf("cnt : %d\n", chrCnt);
+//        printf("cnt : %d\n", chrCnt);
 //        wordMemCpy(chrCnt, wordSeperated, lp);
         for (int j = 0; j<chrCnt; j++) {
             strcpy(quizArr[i][j], wordSeperated[j]);
@@ -72,28 +72,16 @@ void quiz(void){
             }
         }
         
-//        for (int i = 0; i<line; i++) { // 확인용 코드
-//            for (int j = 0; j<4; j++) {
-//                printf("%s ", quizArr[i][j]);
-//            }
-//            printf("\n");
-//        }
-
-        
         
     } else {
         shuffle(quizArr, line);
-        for (int i = 0; i<line; i++) { // 확인용 코드
-            for (int j = 0; j<4; j++) {
-                printf("%s ", quizArr[i][j]);
-            }
-            printf("\n");
-        }
     }
+    system("clear");
     printf(">> 영어 단어 암기 프로그램 : 영어단어 맞추기 <<\n");
     char answer[16];
     double score = 0;
     int corNum = 0;
+    int qnum = 0;
     for (int i = 0; i<line; i++) {
         printf("%s %s %s -> ", quizArr[i][1], quizArr[i][2], quizArr[i][3]);
         scanf("%s", answer);
@@ -103,14 +91,17 @@ void quiz(void){
         if (!strcmp(answer, quizArr[i][0])) {
             printf("correct!\n");
             corNum++;
+            qnum++;
         } else {
             printf("incorrect!\n");
+            qnum++;
         }
     }
-    score = (double)corNum/line * 100;
+    score = (double)corNum/qnum * 100;
     printf("당신의 점수는 %.2lf 점입니다\n", score);
     getchar();
     getchar();
+    system("clear");
     
     return;
 }

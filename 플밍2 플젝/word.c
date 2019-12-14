@@ -131,7 +131,7 @@ int separateString(char input[], char **sArr, char *std){
     while (tokptr != NULL) { // 옮겨주면서 분리한거 저장
         sArr[pmove] = tokptr;
         pmove++;
-        printf("pmove : %d\n", pmove);
+//        printf("pmove : %d\n", pmove);
         tokptr = strtok(NULL, std);
     }
     return pmove;
@@ -143,29 +143,29 @@ void wordMemCpy(int pmove, char *sArr[], List *lp){
     switch (pmove) {
         case 2: // 한글 뜻 한개적었을때
             strcpy(temp.eng, sArr[0]);
-                            printf("eng : %s\n", sArr[0]);
+//                            printf("eng : %s\n", sArr[0]);
             strcpy(temp.kr1, sArr[1]);
-                            printf("kor1 : %s\n", sArr[1]);
+//                            printf("kor1 : %s\n", sArr[1]);
             addLast(lp, temp.eng, temp.kr1, temp.kr2, temp.kr3);
             break;
         case 3: // 뜻 두개
             strcpy(temp.eng, sArr[0]);
-                            printf("eng : %s\n", sArr[0]);
+//                            printf("eng : %s\n", sArr[0]);
             strcpy(temp.kr1, sArr[1]);
-                            printf("kor1 : %s\n", sArr[1]);
+//                            printf("kor1 : %s\n", sArr[1]);
             strcpy(temp.kr2, sArr[2]);
-                            printf("kor2 : %s\n", sArr[2]);
+//                            printf("kor2 : %s\n", sArr[2]);
             addLast(lp, temp.eng, temp.kr1, temp.kr2, temp.kr3);
             break;
         case 4: // 뜻 세개
             strcpy(temp.eng, sArr[0]);
-                            printf("eng : %s\n", sArr[0]);
+//                            printf("eng : %s\n", sArr[0]);
             strcpy(temp.kr1, sArr[1]);
-                            printf("kor1 : %s\n", sArr[1]);
+//                            printf("kor1 : %s\n", sArr[1]);
             strcpy(temp.kr2, sArr[2]);
-                            printf("kor2 : %s\n", sArr[2]);
+//                            printf("kor2 : %s\n", sArr[2]);
             strcpy(temp.kr3, sArr[3]);
-                            printf("kor3 : %s\n", sArr[3]);
+//                            printf("kor3 : %s\n", sArr[3]);
             addLast(lp, temp.eng, temp.kr1, temp.kr2, temp.kr3);
             break;
         default:
@@ -181,7 +181,7 @@ int getTotalLine(char *name){
     while((c=fgetc(fp))!=EOF)
         if(c=='\n') line++;
     fclose(fp);
-    printf("line : %d\n", line);
+//    printf("line : %d\n", line);
     return line;
 }
 void stringCpy(char temp[], char string[][4][30], int index){
@@ -211,31 +211,8 @@ void shuffle(char string[][4][30], int line){
 //        stringCpy(temp, string, rn);
     }
 }
-//void randomize(char string[][4][30], int line){
-////    srand(time(NULL));
-//    int nA, nB;
-//    char nTemp[30] = {""};
-//    for (int i = 0; i<line*2; i++) {
-//        nA = rand() % line;
-//        nB = rand() % line;
-//        
-////        if (nA == nB) {
-////
-////        }
-//        
-//        strcpy(nTemp, string[nA][0]);
-//        strcpy(string[nA][0], string[nB][0]);
-//        strcpy(string[nB][0], nTemp);
-//                
-//    }
-//    for (int i = 0; i<line; i++) {
-//        printf("random eng %d : %s\n", i, string[i][0]);
-//    }
-//}
-
-//void swap(char string[][4][30], int indexA, int indexB){
-//    char temp[30];
-//
-//}
-//
-
+void MyFlush(void){
+    while (getchar() != '\n') {
+        ;
+    }
+}

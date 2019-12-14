@@ -41,6 +41,7 @@ void wordMemCpy(int pmove, char *sArr[], List *lp);
 void shuffle(char string[][4][30], int num);
 void stringCpy(char temp[], char string[][4][30], int index);
 int getTotalLine(char *name);
+void MyFlush(void);
 //void randomize(char string[][4][30], int line);
 #endif /* word_h */
 
