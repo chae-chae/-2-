@@ -26,7 +26,6 @@ BOOL createList(List *lp){
     lp->head->prev = lp->head;
     lp->tail->prev = lp->head;
     lp->size = 0;
-    
     return TRUE;
 }
 BOOL addLast(List *lp, char eng[], char k1[], char k2[], char k3[]){
@@ -63,32 +62,6 @@ void displayList(List *lp){
     }
     return;
 }
-//BOOL removeNode(List *lp, int data){
-//
-//}
-void sortList(List *lp)
-{
-    Node *curp;
-    Node *nextp;
-    char temp[15];
-    if (lp == NULL) { /* lp포인터 NULL check */
-        return;
-    }
-    
-    curp = lp->head->next;
-    while (curp->next != lp->tail) {
-        nextp = curp->next;
-        while (nextp != lp->tail) {
-            if (strcmp(curp->eng, nextp->eng)) {
-                strcpy(temp, curp->eng);
-                strcpy(curp->eng, nextp->eng);
-                strcpy(nextp->eng, temp);
-            }
-            nextp = nextp->next;
-        }
-        curp = curp->next;
-    }
-}
 void destroyList(List *lp){
     Node *cp;
     Node *nextp;
@@ -120,59 +93,17 @@ void saveList(List *lp, FILE *fp){
     }
     return;
 }
-
 int separateString(char input[], char **sArr, char *std){
-//    Node temp = {NULL, "", "", "", "", NULL}; // 여기에 임시적으로 저장하고 후에 lp진퉁에 add해줘야함
-//    char input[300]; //임시로 입력받을 긴 문자열하나
-//    char *sArr[4] = {NULL, }; // 자른 문자열 포인터 저장할 배열 4칸(최대치를 위해)
     memset(sArr, 0, sizeof(sArr)+1);
     int pmove = 0; // 자른 문자열 포인터 옮겨줄 변수
     char *tokptr = strtok(input, std); // 문자열 공백마다 분리
     while (tokptr != NULL) { // 옮겨주면서 분리한거 저장
         sArr[pmove] = tokptr;
         pmove++;
-//        printf("pmove : %d\n", pmove);
         tokptr = strtok(NULL, std);
     }
     return pmove;
 }
-
-
-void wordMemCpy(int pmove, char *sArr[], List *lp){
-    Node temp = {NULL, "", "", "", "", NULL}; // 여기에 임시적으로 저장하고 후에 lp진퉁에 add해줘야함
-    switch (pmove) {
-        case 2: // 한글 뜻 한개적었을때
-            strcpy(temp.eng, sArr[0]);
-//                            printf("eng : %s\n", sArr[0]);
-            strcpy(temp.kr1, sArr[1]);
-//                            printf("kor1 : %s\n", sArr[1]);
-            addLast(lp, temp.eng, temp.kr1, temp.kr2, temp.kr3);
-            break;
-        case 3: // 뜻 두개
-            strcpy(temp.eng, sArr[0]);
-//                            printf("eng : %s\n", sArr[0]);
-            strcpy(temp.kr1, sArr[1]);
-//                            printf("kor1 : %s\n", sArr[1]);
-            strcpy(temp.kr2, sArr[2]);
-//                            printf("kor2 : %s\n", sArr[2]);
-            addLast(lp, temp.eng, temp.kr1, temp.kr2, temp.kr3);
-            break;
-        case 4: // 뜻 세개
-            strcpy(temp.eng, sArr[0]);
-//                            printf("eng : %s\n", sArr[0]);
-            strcpy(temp.kr1, sArr[1]);
-//                            printf("kor1 : %s\n", sArr[1]);
-            strcpy(temp.kr2, sArr[2]);
-//                            printf("kor2 : %s\n", sArr[2]);
-            strcpy(temp.kr3, sArr[3]);
-//                            printf("kor3 : %s\n", sArr[3]);
-            addLast(lp, temp.eng, temp.kr1, temp.kr2, temp.kr3);
-            break;
-        default:
-            break;
-    }
-}
-
 int getTotalLine(char *name){
     FILE *fp;
     int line=0;
@@ -181,20 +112,17 @@ int getTotalLine(char *name){
     while((c=fgetc(fp))!=EOF)
         if(c=='\n') line++;
     fclose(fp);
-//    printf("line : %d\n", line);
     return line;
 }
-void stringCpy(char temp[], char string[][4][30], int index){
+void stringCpy(char temp[], char string[][4][61], int index){
     for (int i = 0; i<4; i++) {
         strcpy(temp, string[index][i]);
         strcpy(string[index][i], string[index+1][i]);
         strcpy(string[index+1][i], temp);
     }
 }
-
-void shuffle(char string[][4][30], int line){
-//    srand(time(NULL));
-    char temp[30];
+void shuffle(char string[][4][61], int line){
+    char temp[61];
     int rn;
     for (int i = 0; i< line-1; i++) {
         rn = rand() % (line-i) + i;
@@ -204,11 +132,7 @@ void shuffle(char string[][4][30], int line){
             memmove(temp, string[i][j], sizeof(temp));
             memmove(string[i][j], string[rn][j], sizeof(temp));
             memmove(string[rn][j], temp, sizeof(temp));
-//            strcpy(temp, string[i][j]);
-//            strcpy(string[i][j], string[rn][j]);
-//            strcpy(string[rn][j], temp);
         }
-//        stringCpy(temp, string, rn);
     }
 }
 void MyFlush(void){
