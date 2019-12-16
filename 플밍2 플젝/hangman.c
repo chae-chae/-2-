@@ -19,9 +19,6 @@ void hangMan(void){
     long long size; // 혹시 모자랄수도 있으니까
     char *wordBook;
     unsigned long whatByte;
-    List list;
-    List* lp = &list;
-    createList(lp);
     printf("파일명(일차) : ");
     scanf("%d", &day);
     sprintf(filename, "%d", day);
@@ -144,6 +141,7 @@ void hangMan(void){
             printf("######################\n");
             sleep(3);
             system("clear");
+            free(wordBook);
             return;
         }
         printf("\n\n\n");
@@ -153,6 +151,5 @@ void hangMan(void){
     printf("##############\n");
     sleep(3);
     system("clear");
-    destroyList(lp);
     free(wordBook);
 }

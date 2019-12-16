@@ -21,9 +21,6 @@ void flashCard(void){
     long long size; // 혹시 모자랄수도 있으니까
     char *wordBook;
     unsigned long whatByte;
-    List list;
-    List* lp = &list;
-    createList(lp);
     printf("파일명(일차) : ");
     scanf("%d", &day);
     sprintf(filename, "%d", day);
@@ -75,9 +72,7 @@ void flashCard(void){
         printf("\t%s %s %s\n", quizArr[i][1], quizArr[i][2], quizArr[i][3]);
         sleep(sec);
         system("clear");
-        
     }
     system("clear");
-    destroyList(lp);
     free(wordBook);
 }
