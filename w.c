@@ -1,6 +1,6 @@
 //
 //  word.c
-//  플밍2 플젝
+//  플밍2 플젝
 //
 //  Created by 채채 on 19/11/2019.
 //  Copyright © 2019 chaechae. All rights reserved.
